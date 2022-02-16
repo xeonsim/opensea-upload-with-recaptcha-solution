@@ -19,7 +19,7 @@ from selenium.webdriver.support import expected_conditions as ExpectedConditions
 root = Tk()
 root.geometry('300x200')
 root.title("NFT Checker")
-input_save_list = []
+input_save_list =["Posts folder :", 0, 0, 0, 0, 0, 0, 0, 0]
 main_directory = os.path.join(sys.path[0])
 
 
@@ -62,20 +62,22 @@ class InputField:
             pickle.dump(input_save_list, outfile)
 
 ###input objects###
-collection_input= InputField("Collection Link", 2, 0, 1)
-start_num_input = InputField("Start Number:", 3, 0, 2)
-end_num_input = InputField("End Number:", 4, 0, 3)
-item_num_input= InputField("How many items\nthere should be?:", 5, 0, 4 )
+collection_input= InputField("Collection Link", 2, 0, 0)
+start_num_input = InputField("Start Number:", 3, 0, 1)
+end_num_input = InputField("End Number:", 4, 0, 2)
+item_num_input= InputField("How many items\nthere should be?:", 5, 0, 3 )
 
 
 
 
 ###save inputs###
 def save():
-    collection_input.save_inputs(1)
-    start_num_input.save_inputs(2)
-    end_num_input.save_inputs(3)
-    item_num_input.save_inputs(4)
+    link=collection_input.input_field.get()
+    input_save_list.insert(0,link)
+    start_num_input.save_inputs(1)
+    end_num_input.save_inputs(2)
+    item_num_input.save_inputs(3)
+    print(input_save_list)
 
   
    
@@ -156,7 +158,8 @@ try:
     with open(save_file_path(), "rb") as infile:
         new_dict = pickle.load(infile)
         global upload_path
-        upload_path = new_dict[0]
+
+        
 except FileNotFoundError:
     pass
 #####BUTTON ZONE END#######
