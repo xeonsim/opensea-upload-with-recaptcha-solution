@@ -16,3 +16,6 @@ updated opensea uploading solution with recaptcha pass
 
 ###If you used this well support me by purchasing my nft 
 https://opensea.io/collection/s-o-n--n-e-t you can make offer! I will give my nft Cheaper than bottom prise!###
+
+youtube https://www.youtube.com/watch?v=E5Bmk9AQjA4
+instagram https://www.instagram.com/s_o_n__n_e_t/
