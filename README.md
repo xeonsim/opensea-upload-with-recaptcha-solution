@@ -11,8 +11,10 @@ updated opensea uploading solution with recaptcha pass
 5. login into your opensea account
 6. Fill out your collection link
 7. Open the image folder you want to upload % The file name must be numbers % 
-8. Click Save form
-9. Click Start button
+8. +If you are using uploadopeasea_metadata.py you should put all your data in src+
+9. +If you are using uploadopensea.py you should select image folder+
+10. Click Save form
+11. Click Start button
 
 ###If you used this well support me by purchasing my nft 
 https://opensea.io/collection/s-o-n--n-e-t you can make offer! I will give my nft Cheaper than bottom prise!###
