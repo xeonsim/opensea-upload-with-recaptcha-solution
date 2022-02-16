@@ -239,6 +239,13 @@ def main_program_loop():
             
    
     while end_num >= start_num:
+        
+        global displayOk
+        displayOk= False
+        print("Start creating NFT " +  loop_title + str(start_num))
+        driver.get(collection_link)
+        time.sleep(1)
+        
         try:
             server_error=WebDriverWait(driver, 5).until(ExpectedConditions.presence_of_element_located((By.XPATH,'/html/body/pre'))).get_attribute('innerHTML')
             if server_error =='Internal Server Error':
@@ -246,22 +253,17 @@ def main_program_loop():
                 print('server error happend')
         except:
             pass
-        global displayOk
-        displayOk= False
-        print("Start creating NFT " +  loop_title + str(start_num))
-        driver.get(collection_link)
-        time.sleep(1)
-        print("step 1")
+        
         wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         additem.click()
         time.sleep(1)
-        print("step 2")
+        
         wait_xpath('//*[@id="media"]')
         imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
         imagePath = os.path.abspath(file_path + "\\" + str(start_num) + "." + loop_file_format)  # change folder here
         imageUpload.send_keys(imagePath)
-        print("step 3")
+        
         name = driver.find_element_by_xpath('//*[@id="name"]')
         name.send_keys(loop_title + str(start_num))  # +1000 for other folders #change name before "#"
         time.sleep(0.5)
@@ -314,7 +316,7 @@ def main_program_loop():
         amount.click()
         amount.send_keys(str(loop_price))
         time.sleep(2)
-        print("step 7")
+        
 
         wait_css_selector("button[type='submit']")
         listing = driver.find_element_by_css_selector("button[type='submit']")
@@ -342,6 +344,7 @@ def main_program_loop():
 
         start_num = start_num + 1
         print('NFT creation completed!')
+        
 
 #####BUTTON ZONE#######
 button_save = tkinter.Button(root, width=20, text="Save Form", command=save) 
