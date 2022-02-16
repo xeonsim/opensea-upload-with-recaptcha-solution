@@ -14,3 +14,5 @@ updated opensea uploading solution with recaptcha pass
 8. Click Save form
 9. Click Start button
 
+###If you used this well support me by purchasing my nft 
+https://opensea.io/collection/s-o-n--n-e-t you can make offer! I will give my nft Cheaper than bottom prise!###
