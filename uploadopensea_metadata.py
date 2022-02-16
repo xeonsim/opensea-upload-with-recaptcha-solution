@@ -389,13 +389,13 @@ def main_program_loop():
            
             input1.send_keys(str(key['trait_type']))
             input2.send_keys(str(key['value']))
-            driver.find_element_by_xpath('//button[text()="Add more"]').click()
-            addmore_button = driver.find_element_by_xpath('//button[text()="Add more"]')
+            
+            addmore_button = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/section/button')
             driver.execute_script("arguments[0].click();", addmore_button)
             time.sleep(0.9)
 
-         driver.find_element_by_xpath('//button[text()="Save"]').click()
-         time.sleep(0.8)
+        driver.find_element_by_xpath('/html/body/div[5]/div/div/div/footer/button').click()
+        time.sleep(0.8)
 
 
 
