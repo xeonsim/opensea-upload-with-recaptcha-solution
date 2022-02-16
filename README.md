@@ -2,6 +2,13 @@
 updated opensea uploading solution with recaptcha pass 
 
 ###opensea-upload-with-recaptcha-solution###
+###some of my code can not work because of chang of HTML then you will get
+NoSuchelEmentError commomly. you can solve it like this. 
+1. Press F12 on the page the program stops. 
+2. Select element that makes program down.
+3. Right Click and copy (Xpath/Selestor)
+4. Paste it to your code.
+Good LUCK!! ###
 
 0. Unzip files
 1. Download Python and Chrome browser 
