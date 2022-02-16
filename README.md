@@ -2,7 +2,7 @@
 updated opensea uploading solution with recaptcha pass 
 
 ###opensea-upload-with-recaptcha-solution###
-
+0. Unzip files
 1. Download Python and Chrome browser 
 2. pip install -r requirements.txt
 3. python openseaupload.py (Run the script)
