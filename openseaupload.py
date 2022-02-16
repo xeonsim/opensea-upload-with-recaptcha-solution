@@ -240,7 +240,7 @@ def main_program_loop():
    
     while end_num >= start_num:
         try:
-            server_error=str(driver.find_element_by_xpath('/html/body/pre').get_attribute('innerHTML'))
+            server_error=WebDriverWait(driver, 5).until(ExpectedConditions.presence_of_element_located((By.XPATH,'/html/body/pre'))).get_attribute('innerHTML')
             if server_error =='Internal Server Error':
                 driver.get(collection_link)
                 print('server error happend')
@@ -275,7 +275,12 @@ def main_program_loop():
         time.sleep(0.5)
 
         # Select Polygon blockchain if applicable
-       
+
+        # if is_polygon.get(): 
+        #     create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button') 
+        #     driver.execute_script("arguments[0].click();", create) 
+        #     time.sleep(1)
+        
         # if is_polygon.get():
         #     blockchain_button = driver.find_element(By.XPATH, '//*[@id="__next"]/div[1]/main/div/div/section/div/form/div[7]/div/div[2]')
         #     blockchain_button.click()
