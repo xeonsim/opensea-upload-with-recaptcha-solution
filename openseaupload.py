@@ -2,8 +2,6 @@ import tkinter
 import subprocess
 from tkinter import *
 from tkinter import filedialog
-import os
-import sys
 import pickle
 import time
 from numpy import inner
@@ -23,7 +21,6 @@ import re
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import random
-import time
 from datetime import datetime
 import requests
 import json
