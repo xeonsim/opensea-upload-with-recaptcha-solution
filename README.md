@@ -15,6 +15,7 @@ updated opensea uploading solution with recaptcha pass
 9. +If you are using uploadopensea.py you should select image folder+
 10. Click Save form
 11. Click Start button
+12. You can check if your NFTs are successfully with NFT Checker.py 
 
 ###If you used this well support me by purchasing my nft 
 https://opensea.io/collection/s-o-n--n-e-t you can make offer! I will give my nft Cheaper than bottom prise!###
