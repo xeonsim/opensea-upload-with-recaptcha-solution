@@ -6,6 +6,7 @@ import os
 import sys
 import pickle
 import time
+from numpy import inner
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -30,10 +31,11 @@ import stem.process
 from stem import Signal
 from stem.control import Controller
 from selenium.common.exceptions import NoSuchElementException        
-###made by xeonsim https://github.com/xeonsim ###
+
+
 root = Tk()
 root.geometry('500x400')
-root.title("NFTs Upload to OpenSea With Recaptcha ")
+root.title("NFTs Upload to OpenSea  ")
 input_save_list = ["NFTs folder :", 0, 0, 0, 0, 0, 0, 0, 0]
 main_directory = os.path.join(sys.path[0])
 is_polygon = BooleanVar()
@@ -237,22 +239,29 @@ def main_program_loop():
             
    
     while end_num >= start_num:
+        try:
+            server_error=str(driver.find_element_by_xpath('/html/body/pre').get_attribute('innerHTML'))
+            if server_error =='Internal Server Error':
+                driver.get(collection_link)
+                print('server error happend')
+        except:
+            pass
         global displayOk
         displayOk= False
         print("Start creating NFT " +  loop_title + str(start_num))
         driver.get(collection_link)
         time.sleep(1)
-        
+        print("step 1")
         wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         additem.click()
         time.sleep(1)
-        
+        print("step 2")
         wait_xpath('//*[@id="media"]')
         imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
         imagePath = os.path.abspath(file_path + "\\" + str(start_num) + "." + loop_file_format)  # change folder here
         imageUpload.send_keys(imagePath)
-       
+        print("step 3")
         name = driver.find_element_by_xpath('//*[@id="name"]')
         name.send_keys(loop_title + str(start_num))  # +1000 for other folders #change name before "#"
         time.sleep(0.5)
@@ -267,7 +276,11 @@ def main_program_loop():
 
         # Select Polygon blockchain if applicable
 
-      
+        # if is_polygon.get(): 
+        #     create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button') 
+        #     driver.execute_script("arguments[0].click();", create) 
+        #     time.sleep(1)
+        
         # if is_polygon.get():
         #     blockchain_button = driver.find_element(By.XPATH, '//*[@id="__next"]/div[1]/main/div/div/section/div/form/div[7]/div/div[2]')
         #     blockchain_button.click()
@@ -306,7 +319,7 @@ def main_program_loop():
         amount.click()
         amount.send_keys(str(loop_price))
         time.sleep(2)
-        
+        print("step 7")
 
         wait_css_selector("button[type='submit']")
         listing = driver.find_element_by_css_selector("button[type='submit']")
