@@ -39,4 +39,4 @@ https://opensea.io/collection/scircles
 you can make offer! I will give my nft Cheaper than bottom prise!###
 
 youtube https://www.youtube.com/watch?v=E5Bmk9AQjA4
-instagram https://www.instagram.com/s_o_n__n_e_t/
+instagram https://www.instagram.com/s_o_n__n_e_t/ https://www.instagram.com/s_circle_s/
