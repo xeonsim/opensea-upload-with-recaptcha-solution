@@ -45,7 +45,7 @@ main_directory = os.path.join(sys.path[0])
 
 
 def supportURL():
-    webbrowser.open_new("https://opensea.io/collection/s-o-n--n-e-t")
+    webbrowser.open_new("https://opensea.io/collection/scircles")
 
 def coffeeURL():
     webbrowser.open_new("https://github.com/xeonsim/opensea-upload-with-recaptcha-solution")
@@ -62,12 +62,12 @@ class WebImage:
 
     def get(self):
         return self.image
-imageurl = "https://lh3.googleusercontent.com/1uSHeqz_2qxP-IYAXb_YXzjhG8G7ypTkcCvxXz8_7GTBOfkd31K06UrJTG5QuBIr-vtljGCcQoRoc8RF6z3G3tpPDo7heSvh1HL1KQ=s130"
+imageurl = "https://lh3.googleusercontent.com/kuhzagz0EXKKyfBOJdzJMTv2tQqPLhMRhPg_vrpApzCNVHv_coHMZyiRTEd7_b6pg1yODNiAJOeqNe2oWZfonMAaqcmECISDhKiT9g=s130"
 img = WebImage(imageurl).get()
 imagelab = tk.Label(root, image=img)
 imagelab.grid(row=0, columnspan=1)
 imagelab.bind("<Button-1>", lambda e:supportURL())
-imageurl2 = "https://lh3.googleusercontent.com/1uSHeqz_2qxP-IYAXb_YXzjhG8G7ypTkcCvxXz8_7GTBOfkd31K06UrJTG5QuBIr-vtljGCcQoRoc8RF6z3G3tpPDo7heSvh1HL1KQ=s130"
+imageurl2 = "https://lh3.googleusercontent.com/kuhzagz0EXKKyfBOJdzJMTv2tQqPLhMRhPg_vrpApzCNVHv_coHMZyiRTEd7_b6pg1yODNiAJOeqNe2oWZfonMAaqcmECISDhKiT9g=s130"
 img2 = WebImage(imageurl2).get()
 imagelab2 = tk.Label(root, image=img2)
 imagelab2.grid(row=0, columnspan=2)
