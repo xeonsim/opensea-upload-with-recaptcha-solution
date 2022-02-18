@@ -32,7 +32,11 @@ NoSuchelEmentError commomly. you can solve it like this.
 12. You can check if your NFTs are successfully with NFT Checker.py 
 
 ###If you used this well support me by purchasing my nft 
-https://opensea.io/collection/s-o-n--n-e-t you can make offer! I will give my nft Cheaper than bottom prise!###
+
+https://opensea.io/collection/s-o-n--n-e-t 
+https://opensea.io/collection/scircles
+
+you can make offer! I will give my nft Cheaper than bottom prise!###
 
 youtube https://www.youtube.com/watch?v=E5Bmk9AQjA4
 instagram https://www.instagram.com/s_o_n__n_e_t/
