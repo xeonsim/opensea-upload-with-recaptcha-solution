@@ -2,6 +2,8 @@ import tkinter
 import subprocess
 from tkinter import *
 from tkinter import filedialog
+import os
+import sys
 import pickle
 import time
 from numpy import inner
@@ -18,9 +20,11 @@ import urllib
 import pydub
 import speech_recognition as sr
 import re
+from contextlib import contextmanager
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import random
+import time
 from datetime import datetime
 import requests
 import json
@@ -143,9 +147,8 @@ def main_program_loop():
         )
         
     
-
     def wait_xpath(code):
-        wait.until(ExpectedConditions.presence_of_element_located((By.XPATH, code)))
+        WebDriverWait(driver,20).until(ExpectedConditions.presence_of_element_located((By.XPATH, code)))
 
     def delay(waiting_time=5):
         driver.implicitly_wait(waiting_time)
@@ -155,22 +158,28 @@ def main_program_loop():
             driver.find_element_by_xpath(xpath)
         except NoSuchElementException:
             return False
-        return True
-    
+        return True 
+     
     def solve_recaptcha():
         global displayOk
-        displayOk = check_exists_by_xpath('/html/body/div[9]/div/div/div/section/div/p')
+        time.sleep(2)
+        displayOk = check_exists_by_xpath('/html/body/div[6]/div/div/div/section/div/div')
         print(displayOk)
+        
         if displayOk:
+            # time.sleep(100)
+            # raise TimeoutError
             try:
                 iframes = driver.find_elements_by_tag_name("iframe")
                 driver.switch_to.frame(iframes[0])
+                
             except:
                 pass
                 
             try:
                 check_button = WebDriverWait(driver, 10).until(ExpectedConditions.presence_of_element_located((By.XPATH,'//*[@id="recaptcha-anchor"]/div[1]')))
-                
+                time.sleep(random.randint(2,3))
+                time.sleep(random.randint(2,3))
                 check_button.click()
             except:
                 pass
@@ -182,9 +191,11 @@ def main_program_loop():
                 pass
 
             try:
+                time.sleep(random.randint(2,3))
+                time.sleep(random.randint(2,3))
                 ssd=WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button#recaptcha-audio-button")))
                 ssd.click()
-                time.sleep(1)
+                
             except:
                 pass
                 
@@ -225,13 +236,22 @@ def main_program_loop():
                 # key in results and submit
                 delay()
                 driver.find_element_by_id("audio-response").send_keys(key.lower())
+                time.sleep(random.randint(2,3))
                 driver.find_element_by_id("audio-response").send_keys(Keys.ENTER)
 
-                driver.switch_to.default_content()     
-                time.sleep(2)  
+                     
+                  
             except:
                 pass
+                return False
+            try:   
+                driver.switch_to.default_content()
+                
+            except:
+                pass
+                
             displayOk=False
+            
            
             
    
@@ -241,39 +261,56 @@ def main_program_loop():
         displayOk= False
         print("Start creating NFT " +  loop_title + str(start_num))
         driver.get(collection_link)
+        time.sleep(random.randint(2,3))
+        print("step 1")
+
+        # try:
+        #     for i in range(0,2):
+        #         server_error=WebDriverWait(driver, 1).until(ExpectedConditions.presence_of_element_located((By.XPATH,'/html/body/pre'))).get_attribute('innerHTML')
+        #         if server_error =='Internal Server Error':
+        #             driver.refresh()
+        #             print('server error happend')
+        # except:
+        #     pass
+
+        # wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
+        # additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
+        # additem.click()
         time.sleep(1)
-        
+        time.sleep(random.randint(2,3))
         try:
-            server_error=WebDriverWait(driver, 5).until(ExpectedConditions.presence_of_element_located((By.XPATH,'/html/body/pre'))).get_attribute('innerHTML')
-            if server_error =='Internal Server Error':
-                driver.get(collection_link)
-                print('server error happend')
+            print("step 2")
+            wait_xpath('//*[@id="media"]')
+            imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
+            imagePath = os.path.abspath(file_path + "\\" + str(start_num) + "." + loop_file_format)  # change folder here
+            imageUpload.send_keys(imagePath)
         except:
-            pass
-        
-        wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
-        additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
-        additem.click()
-        time.sleep(1)
-        
-        wait_xpath('//*[@id="media"]')
-        imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
-        imagePath = os.path.abspath(file_path + "\\" + str(start_num) + "." + loop_file_format)  # change folder here
-        imageUpload.send_keys(imagePath)
-        
+            driver.refresh()
+            wait_xpath('//*[@id="media"]')
+            imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
+            imagePath = os.path.abspath(file_path + "\\" + str(start_num) + "." + loop_file_format)  # change folder here
+            imageUpload.send_keys(imagePath)
+        print("step 3")
         name = driver.find_element_by_xpath('//*[@id="name"]')
         name.send_keys(loop_title + str(start_num))  # +1000 for other folders #change name before "#"
+        time.sleep(random.randint(1,2))
         time.sleep(0.5)
 
         ext_link = driver.find_element_by_xpath('//*[@id="external_link"]')
         ext_link.send_keys(loop_external_link)
+        time.sleep(random.randint(1,2))
         time.sleep(0.5)
 
         desc = driver.find_element_by_xpath('//*[@id="description"]')
         desc.send_keys(loop_description)
+        time.sleep(random.randint(1,2))
         time.sleep(0.5)
-
         # Select Polygon blockchain if applicable
+
+        # if is_polygon.get(): 
+        #     create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button') 
+        #     driver.execute_script("arguments[0].click();", create) 
+        #     time.sleep(1)
         
         # if is_polygon.get():
         #     blockchain_button = driver.find_element(By.XPATH, '//*[@id="__next"]/div[1]/main/div/div/section/div/form/div[7]/div/div[2]')
@@ -287,60 +324,119 @@ def main_program_loop():
         if is_polygon.get(): 
             create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button') 
             driver.execute_script("arguments[0].click();", create) 
-            time.sleep(1)
+            
         
         
         create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button')
         driver.execute_script("arguments[0].click();", create)
+        time.sleep(random.randint(2,3))
         time.sleep(1)
-        solve_recaptcha()
-        solve_recaptcha()
-        
-        
+        a=solve_recaptcha()
+        a=solve_recaptcha()
 
-        wait_css_selector("i[aria-label='Close']")
-        cross = driver.find_element_by_css_selector("i[aria-label='Close']")
-        cross.click()
-        time.sleep(1)
+        if a==True:
+            pass
+        if a==False:
+            print("waiting") 
+            time.sleep(30)
+        time.sleep(2)
+        time.sleep(random.randint(2,3))
+        try:
+            wait_css_selector("i[aria-label='Close']")
+            
+            cross = driver.find_element_by_css_selector("i[aria-label='Close']")
+            time.sleep(random.randint(2,3))
+            cross.click()
+            time.sleep(1)
+            
+            
+        except:
+            driver.refresh()
+            pass
+        
+        
       
         main_page = driver.current_window_handle
-        wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
-        sell = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
-        sell.click()               
-
-        wait_css_selector("input[placeholder='Amount']")
-        amount = driver.find_element_by_css_selector("input[placeholder='Amount']")
-        amount.click()
-        amount.send_keys(str(loop_price))
-        time.sleep(2)
-        
+        try:
+            wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
+            sell = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
+            time.sleep(random.randint(2,3))
+            sell.click()               
+            time.sleep(1)
+            # time.sleep(random.randint(2,3))
+        except:
+            driver.refresh()
+            wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
+            sell = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
+            sell.click() 
+        try:
+            wait_css_selector("input[placeholder='Amount']")
+            amount = driver.find_element_by_css_selector("input[placeholder='Amount']")
+            time.sleep(random.randint(2,3))
+            amount.click()
+            amount.send_keys(str(loop_price))
+            time.sleep(1)
+            time.sleep(random.randint(1,2))
+            print("step 7")
+        except:
+            driver.refresh()
+            wait_css_selector("input[placeholder='Amount']")
+            amount = driver.find_element_by_css_selector("input[placeholder='Amount']")
+            time.sleep(random.randint(2,3))
+            amount.click()
+            amount.send_keys(str(loop_price))
+            time.sleep(1)
+            print("step 7")
 
         wait_css_selector("button[type='submit']")
         listing = driver.find_element_by_css_selector("button[type='submit']")
         listing.click()
-        time.sleep(5)
-        
-        wait_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb fzwDgL']")
-        sign = driver.find_element_by_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb fzwDgL']")
-        sign.click()
+        driver.find_element_by_xpath
         time.sleep(2)
-        
+        # time.sleep(random.randint(2,3))
+        try: 
+            wait_css_selector("#Body\ react-aria-18 > div > div > button")
+            sign=driver.find_element_by_css_selector("#Body\ react-aria-18 > div > div > button")
+            time.sleep(random.randint(2,3))
+            sign.click()
+            print("success")
+            time.sleep(2)
+            # time.sleep(random.randint(2,3))
+        except:            
+            print("finding button...")
+            for i in range(1,40):
+                try:
+                    ac= check_exists_by_xpath('//*[@id="Body react-aria-'+str(i)+'"]/div/div/button')
+                    if ac == True:
+                        sign = driver.find_element_by_css_selector("#Body\ react-aria-"+str(i)+" > div > div > button")
+                        sign.click()
+                        time.sleep(1)
+                        break
+                except: 
+                    pass
+       
+        # WebDriverWait(driver, 15).until(lambda driver: len(main_page) != len(driver.window_handles))         
         for handle in driver.window_handles:
             if handle != main_page:
                 login_page = handle
-        # change the control to signin page
+                
         driver.switch_to.window(login_page)
         wait_css_selector("button[data-testid='request-signature__sign']")
         sign = driver.find_element_by_css_selector("button[data-testid='request-signature__sign']")
         sign.click()
-        time.sleep(1)
-        
-        # change control to main page
         driver.switch_to.window(main_page)
-        time.sleep(1)
+                
+        # change the control to signin page
+        
+        time.sleep(3)   
+        time.sleep(random.randint(2,3))            
+        # change control to main page
+        
+       
 
         start_num = start_num + 1
         print('NFT creation completed!')
+        
         
 
 #####BUTTON ZONE#######
